@@ -53,7 +53,7 @@
                                                     Hello ${userName},</h1>
                                                 <p class=""
                                                    style="margin: 20px 0; font-size: 16px; mso-line-height-rule: exactly; line-height: 24px;">
-                                                    <span style="font-weight: 400;">Thank you for joining <strong>SmileSoft App</strong>, an efficient and smart solution to manage your health!</span><br/><br/><span
+                                                    <span style="font-weight: 400;">Thank you for joining <strong>Tecso App</strong>, an efficient and smart solution to manage your health!</span><br/><br/><span
                                                             style="font-weight: 400;">To complete the registration process, please confirm your email address to activate your account</span>
                                                 <table style="border: 0; width: 100%;" cellspacing="0" cellpadding="0">
                                                     <tbody>
@@ -96,7 +96,7 @@
                                                         question</a></p>
                                                 <p class="tw-signoff"
                                                    style="margin: 45px 0 5px; font-size: 16px; mso-line-height-rule: exactly; line-height: 24px;">
-                                                    Our best, <br/> The SmileSoft App team</p>
+                                                    Our best, <br/> The Tecso App team</p>
                                             </td>
                                         </tr>
                                         </tbody>

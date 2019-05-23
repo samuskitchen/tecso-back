@@ -1,6 +1,8 @@
 package coop.tecso.examen.security;
 
+import coop.tecso.examen.exception.UserLoginException;
 import coop.tecso.examen.service.CustomUserDetailsService;
+import coop.tecso.examen.service.UserDeviceService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    private UserDeviceService userDeviceService;
+
     /**
      * Filter the incoming request for a valid token in the request header
      */
@@ -45,6 +50,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
                 Long userId = jwtTokenProvider.getUserIdFromJWT(jwt);
+
+                // Validate if the session closed and they can not enter with an active token (jwt)
+                userDeviceService.findByUserId(userId).orElseThrow(() -> new UserLoginException("Couldn't login user [" + userId + "]"));
 
                 UserDetails userDetails = customUserDetailsService.loadUserById(userId);
                 UsernamePasswordAuthenticationToken authentication =

@@ -13,13 +13,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * The type Role. Defines the role and the list of users who are associated with that role
  */
-@Entity(name = "role")
+@Entity
+@Table(name = "role")
 public class Role {
 
     @Id

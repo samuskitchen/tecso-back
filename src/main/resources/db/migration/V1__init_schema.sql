@@ -37,11 +37,12 @@ CREATE TABLE "movements"(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE "user"(
+CREATE TABLE "users"(
     user_id serial NOT NULL,
     is_active boolean NOT NULL,
     email character varying(255) NOT NULL,
-    first_name character varying(255) NOT NULL,
+    first_name character varying(255),
+    last_name character varying(255),
     is_email_verified boolean NOT NULL,
     username character varying(255) NOT NULL,
     password character varying(255) NOT NULL,
@@ -99,13 +100,13 @@ ALTER TABLE "account" ADD CONSTRAINT fk_person_physical FOREIGN KEY (fk_person_p
 ALTER TABLE "movements" ADD CONSTRAINT fk_account FOREIGN KEY (fk_id_account) REFERENCES "account" (id);
 ALTER TABLE "legal_person" ADD CONSTRAINT uk_rut_legal_person UNIQUE (rut);
 ALTER TABLE "physical_person" ADD CONSTRAINT uk_rut_physical_person UNIQUE (rut);
-ALTER TABLE "user" ADD CONSTRAINT uk_username UNIQUE (username);
-ALTER TABLE "user" ADD CONSTRAINT uk_password UNIQUE (password);
+ALTER TABLE "users" ADD CONSTRAINT uk_username UNIQUE (username);
+ALTER TABLE "users" ADD CONSTRAINT uk_password UNIQUE (password);
 ALTER TABLE "role" ADD CONSTRAINT uk_role_name UNIQUE (role_name);
-ALTER TABLE "user_authority" ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "user" (user_id);
+ALTER TABLE "user_authority" ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "users" (user_id);
 ALTER TABLE "user_authority" ADD CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES "role" (role_id);
-ALTER TABLE "user_device" ADD CONSTRAINT fk_user FOREIGN KEY (fk_user_id) REFERENCES "user" (user_id);
+ALTER TABLE "user_device" ADD CONSTRAINT fk_user FOREIGN KEY (fk_user_id) REFERENCES "users" (user_id);
 ALTER TABLE "email_verification_token" ADD CONSTRAINT uk_token UNIQUE (token);
-ALTER TABLE "email_verification_token" ADD CONSTRAINT fk_user FOREIGN KEY (fk_user_id) REFERENCES "user" (user_id);
+ALTER TABLE "email_verification_token" ADD CONSTRAINT fk_user FOREIGN KEY (fk_user_id) REFERENCES "users" (user_id);
 ALTER TABLE "refresh_token" ADD CONSTRAINT uk_refresh_token UNIQUE (token);
 ALTER TABLE "refresh_token" ADD CONSTRAINT fk_user_device FOREIGN KEY (fk_user_device_id) REFERENCES "user_device" (user_device_id);
