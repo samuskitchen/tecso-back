@@ -19,7 +19,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("coop.tecso.examen"))
-                .paths(PathSelectors.regex("/api.*"))
+                .paths(PathSelectors.regex("/.*"))
                 .build()
                 .apiInfo(metaInfo());
     }
