@@ -1,5 +1,8 @@
 package coop.tecso.examen.util;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
+import java.util.Random;
 import java.util.UUID;
 
 public class Util {
@@ -16,5 +19,9 @@ public class Util {
      */
     public static String generateRandomUuid() {
         return UUID.randomUUID().toString();
+    }
+
+    public static String generateRandomAccount(int length, boolean useLetters, boolean useNumbers){
+        return RandomStringUtils.random(length, useLetters, useNumbers);
     }
 }

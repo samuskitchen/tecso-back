@@ -3,12 +3,12 @@ package coop.tecso.examen.model.enums;
 public enum AccountType {
 
     /**
-     * Account type debit
+     * Current type account
      */
-    DEBITO,
+    CORRIENTE,
 
     /**
-     * Account type credit
+     * Savings type account
      */
-    CREDITO
+    AHORROS
 }

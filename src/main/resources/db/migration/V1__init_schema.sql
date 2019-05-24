@@ -110,3 +110,8 @@ ALTER TABLE "email_verification_token" ADD CONSTRAINT uk_token UNIQUE (token);
 ALTER TABLE "email_verification_token" ADD CONSTRAINT fk_user FOREIGN KEY (fk_user_id) REFERENCES "users" (user_id);
 ALTER TABLE "refresh_token" ADD CONSTRAINT uk_refresh_token UNIQUE (token);
 ALTER TABLE "refresh_token" ADD CONSTRAINT fk_user_device FOREIGN KEY (fk_user_device_id) REFERENCES "user_device" (user_device_id);
+ALTER TABLE "account" ALTER COLUMN fk_person_legal DROP NOT NULL;
+ALTER TABLE "account" ALTER COLUMN fk_person_physical DROP NOT NULL;
+
+CREATE INDEX idx_physical_person_rut ON "physical_person"(rut);
+CREATE INDEX idx_legal_person_rut ON "legal_person"(rut);
