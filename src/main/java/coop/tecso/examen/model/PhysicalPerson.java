@@ -1,6 +1,5 @@
 package coop.tecso.examen.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import coop.tecso.examen.model.enums.DocumentType;
 
 import javax.persistence.Column;
@@ -10,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -35,22 +33,19 @@ public class PhysicalPerson {
     @Column(name = "rut", unique = true)
     private String rut;
 
-    @OneToOne(optional = false, mappedBy = "physicalPerson")
-    @JsonIgnore
-    private Account account;
-
+    private Boolean active;
 
     public PhysicalPerson() {
     }
 
     public PhysicalPerson(String name, String surname, DocumentType documentType,
-                          String numberDocument, String rut, Account account) {
+                          String numberDocument, String rut, Boolean active) {
         this.name = name;
         this.surname = surname;
         this.documentType = documentType;
         this.numberDocument = numberDocument;
         this.rut = rut;
-        this.account = account;
+        this.active = active;
     }
 
     public Long getId() {
@@ -101,11 +96,11 @@ public class PhysicalPerson {
         this.rut = rut;
     }
 
-    public Account getAccount() {
-        return account;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

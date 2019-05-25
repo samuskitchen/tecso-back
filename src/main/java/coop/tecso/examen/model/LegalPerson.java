@@ -1,13 +1,10 @@
 package coop.tecso.examen.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,18 +24,17 @@ public class LegalPerson {
     @Column(name = "rut", unique = true)
     private String rut;
 
-    @OneToOne(optional = false, mappedBy = "legalPerson")
-    @JsonIgnore
-    private Account account;
+    private Boolean active;
 
     public LegalPerson() {
     }
 
-    public LegalPerson(String businessName, Integer foundationYear, String rut, Account account) {
+    public LegalPerson(String businessName, Integer foundationYear, String rut,
+                       Boolean active) {
         this.businessName = businessName;
         this.foundationYear = foundationYear;
         this.rut = rut;
-        this.account = account;
+        this.active = active;
     }
 
     public Long getId() {
@@ -73,11 +69,11 @@ public class LegalPerson {
         this.rut = rut;
     }
 
-    public Account getAccount() {
-        return account;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

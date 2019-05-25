@@ -48,7 +48,8 @@ public class Account {
     public Account() {
     }
 
-    public Account(String numberAccount, Currency currency, BigDecimal balance, AccountType accountType, LegalPerson legalPerson) {
+    public Account(String numberAccount, Currency currency, BigDecimal balance,
+                   AccountType accountType, LegalPerson legalPerson) {
         this.numberAccount = numberAccount;
         this.currency = currency;
         this.balance = balance;
@@ -56,12 +57,13 @@ public class Account {
         this.legalPerson = legalPerson;
     }
 
-    public Account(String numberAccount, Currency currency, BigDecimal balance, AccountType accountType, PhysicalPerson physicalperson) {
+    public Account(String numberAccount, Currency currency, BigDecimal balance,
+                   AccountType accountType, PhysicalPerson physicalPerson) {
         this.numberAccount = numberAccount;
         this.currency = currency;
         this.balance = balance;
         this.accountType = accountType;
-        this.physicalPerson = physicalperson;
+        this.physicalPerson = physicalPerson;
     }
 
     public Long getId() {
@@ -116,7 +118,7 @@ public class Account {
         return physicalPerson;
     }
 
-    public void setPhysicalPerson(PhysicalPerson physicalperson) {
-        this.physicalPerson = physicalperson;
+    public void setPhysicalPerson(PhysicalPerson physicalPerson) {
+        this.physicalPerson = physicalPerson;
     }
 }

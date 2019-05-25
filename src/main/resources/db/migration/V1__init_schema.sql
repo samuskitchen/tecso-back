@@ -3,6 +3,7 @@ CREATE TABLE "legal_person"(
     business_name character varying(100) NOT NULL,
     foundation_year integer NOT NULL,
     rut character varying(20) NOT NULL,
+    active boolean NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -13,6 +14,7 @@ CREATE TABLE "physical_person"(
     document_type character varying(2) NOT NULL,
     number_document character varying(20) NOT NULL,
     rut character varying(20) NOT NULL,
+    active boolean NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -21,7 +23,7 @@ CREATE TABLE "account"(
     number_account character varying(20) NOT NULL,
     currency character varying(10) NOT NULL,
     balance numeric(16, 2),
-    type_account character varying(10) NOT NULL ,
+    type_account character varying(10) NOT NULL,
     fk_person_legal serial,
     fk_person_physical serial,
     PRIMARY KEY (id)
@@ -95,23 +97,32 @@ CREATE TABLE "refresh_token"(
     PRIMARY KEY (token_id)
 );
 
+/* ALTER TABLE FOREIGN KEY */
 ALTER TABLE "account" ADD CONSTRAINT fk_person_legal FOREIGN KEY (fk_person_legal) REFERENCES "legal_person" (id);
 ALTER TABLE "account" ADD CONSTRAINT fk_person_physical FOREIGN KEY (fk_person_physical) REFERENCES "physical_person" (id);
 ALTER TABLE "movements" ADD CONSTRAINT fk_account FOREIGN KEY (fk_id_account) REFERENCES "account" (id);
+ALTER TABLE "user_authority" ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "users" (user_id);
+ALTER TABLE "user_authority" ADD CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES "role" (role_id);
+ALTER TABLE "user_device" ADD CONSTRAINT fk_user FOREIGN KEY (fk_user_id) REFERENCES "users" (user_id);
+ALTER TABLE "email_verification_token" ADD CONSTRAINT fk_user FOREIGN KEY (fk_user_id) REFERENCES "users" (user_id);
+ALTER TABLE "refresh_token" ADD CONSTRAINT fk_user_device FOREIGN KEY (fk_user_device_id) REFERENCES "user_device" (user_device_id);
+
+/* ALTER TABLE UNIQUE KEY */
 ALTER TABLE "legal_person" ADD CONSTRAINT uk_rut_legal_person UNIQUE (rut);
 ALTER TABLE "physical_person" ADD CONSTRAINT uk_rut_physical_person UNIQUE (rut);
 ALTER TABLE "users" ADD CONSTRAINT uk_username UNIQUE (username);
 ALTER TABLE "users" ADD CONSTRAINT uk_password UNIQUE (password);
 ALTER TABLE "role" ADD CONSTRAINT uk_role_name UNIQUE (role_name);
-ALTER TABLE "user_authority" ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "users" (user_id);
-ALTER TABLE "user_authority" ADD CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES "role" (role_id);
-ALTER TABLE "user_device" ADD CONSTRAINT fk_user FOREIGN KEY (fk_user_id) REFERENCES "users" (user_id);
-ALTER TABLE "email_verification_token" ADD CONSTRAINT uk_token UNIQUE (token);
-ALTER TABLE "email_verification_token" ADD CONSTRAINT fk_user FOREIGN KEY (fk_user_id) REFERENCES "users" (user_id);
 ALTER TABLE "refresh_token" ADD CONSTRAINT uk_refresh_token UNIQUE (token);
-ALTER TABLE "refresh_token" ADD CONSTRAINT fk_user_device FOREIGN KEY (fk_user_device_id) REFERENCES "user_device" (user_device_id);
+ALTER TABLE "email_verification_token" ADD CONSTRAINT uk_token UNIQUE (token);
+
+/* ALTER TABLE ACCOUNT */
 ALTER TABLE "account" ALTER COLUMN fk_person_legal DROP NOT NULL;
 ALTER TABLE "account" ALTER COLUMN fk_person_physical DROP NOT NULL;
 
+/* CREATE INDEX */
 CREATE INDEX idx_physical_person_rut ON "physical_person"(rut);
 CREATE INDEX idx_legal_person_rut ON "legal_person"(rut);
+CREATE INDEX idx_physical_person_name ON "physical_person"(name);
+CREATE INDEX idx_physical_person_surname ON "physical_person"(surname);
+CREATE INDEX idx_legal_person_business_name ON "legal_person"(business_name);
