@@ -31,7 +31,7 @@ CREATE TABLE "account"(
 
 CREATE TABLE "movements"(
     id serial NOT NULL,
-    date time with time zone NOT NULL,
+    date timestamp without time zone NOT NULL,
     type_movement character varying(10) NOT NULL,
     description character varying(200) NOT NULL,
     amount numeric(16, 2) NOT NULL,

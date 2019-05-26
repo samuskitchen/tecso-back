@@ -36,17 +36,17 @@ public class Movements {
 
     @OneToOne
     @JoinColumn(name = "fk_id_account", referencedColumnName = "id")
-    private LegalPerson legalPerson;
+    private Account account;
 
     public Movements() {
     }
 
-    public Movements(OffsetDateTime date, TypeMovement typeMovement, String description, BigDecimal amount, LegalPerson legalPerson) {
+    public Movements(OffsetDateTime date, TypeMovement typeMovement, String description, BigDecimal amount, Account account) {
         this.date = date;
         this.typeMovement = typeMovement;
         this.description = description;
         this.amount = amount;
-        this.legalPerson = legalPerson;
+        this.account = account;
     }
 
     public Long getId() {
@@ -89,11 +89,11 @@ public class Movements {
         this.amount = amount;
     }
 
-    public LegalPerson getLegalPerson() {
-        return legalPerson;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setLegalPerson(LegalPerson legalPerson) {
-        this.legalPerson = legalPerson;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

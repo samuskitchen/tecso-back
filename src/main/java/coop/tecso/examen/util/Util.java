@@ -2,6 +2,7 @@ package coop.tecso.examen.util;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.math.BigDecimal;
 import java.util.Random;
 import java.util.UUID;
 
@@ -21,7 +22,40 @@ public class Util {
         return UUID.randomUUID().toString();
     }
 
+
+    /**
+     * It works that generates a random number
+     *
+     * @param length
+     * @param useLetters
+     * @param useNumbers
+     * @return
+     */
     public static String generateRandomAccount(int length, boolean useLetters, boolean useNumbers){
         return RandomStringUtils.random(length, useLetters, useNumbers);
+    }
+
+    /**
+     * Function that validates the amount of the discovered (financial) is greater than allowed
+     *
+     * @param firstValue
+     * @param secondValue
+     * @return
+     */
+    public static Boolean validateAmount(BigDecimal firstValue, BigDecimal secondValue){
+        int res;
+        res = firstValue.compareTo(secondValue);
+
+        if( res == 0 ) {
+            return true;
+        }
+        else if( res == 1 ){
+            return true;
+        }
+        else if( res == -1 ){
+            return false;
+        }
+
+        return false;
     }
 }

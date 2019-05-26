@@ -21,6 +21,9 @@ spring:
             use_jdbc_metadata_defaults: false
           dialect: org.hibernate.dialect.PostgresPlusDialect
           format_sql: true
+          #Configure Time Zone
+          jdbc:
+            time_zone: UTC
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres

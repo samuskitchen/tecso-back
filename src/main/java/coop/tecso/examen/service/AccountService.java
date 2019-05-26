@@ -5,11 +5,15 @@ import coop.tecso.examen.model.Account;
 import coop.tecso.examen.model.LegalPerson;
 import coop.tecso.examen.model.PhysicalPerson;
 import coop.tecso.examen.model.dto.AccountRequest;
+import coop.tecso.examen.model.enums.AccountType;
 import coop.tecso.examen.repository.AccountRepository;
 import coop.tecso.examen.repository.LegalPersonRepository;
 import coop.tecso.examen.repository.PhysicalPersonRepository;
 import coop.tecso.examen.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -55,7 +59,11 @@ public class AccountService {
         } else {
             return updateAccountPhysical(accountRequest, optionalAccount, physicalPersonOptional);
         }
+    }
 
+    public Page<Account> findAccountByType(AccountType accountType, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return accountRepository.findAccountByAccountType(accountType, pageable);
     }
 
     /**

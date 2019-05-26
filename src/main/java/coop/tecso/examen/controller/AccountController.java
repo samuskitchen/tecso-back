@@ -3,24 +3,26 @@ package coop.tecso.examen.controller;
 import coop.tecso.examen.exception.AppException;
 import coop.tecso.examen.model.Account;
 import coop.tecso.examen.model.dto.AccountRequest;
+import coop.tecso.examen.model.enums.AccountType;
 import coop.tecso.examen.service.AccountService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/account")
 public class AccountController {
 
-    private static final Logger logger = LogManager.getLogger(AuthController.class);
+    private static final Logger logger = LogManager.getLogger(AccountController.class);
 
     @Autowired
     private AccountService accountService;
@@ -37,12 +39,19 @@ public class AccountController {
     }
 
     @PutMapping(path = "update")
-    public ResponseEntity<Account> accountUpdate(@RequestBody AccountRequest accountRequest){
+    public ResponseEntity<Account> accountUpdate(@RequestBody AccountRequest accountRequest) {
         return accountService.updateAccount(accountRequest)
                 .map(account -> {
                     logger.info("Update Account: " + account.toString());
                     return ResponseEntity.ok(account);
                 })
                 .orElseThrow(() -> new AppException("Unexpected error during update account. Please try again"));
+    }
+
+    @GetMapping(path = "find/type")
+    public Page<Account> accountFindByType(@RequestParam AccountType accountType,
+                                           @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                           @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        return accountService.findAccountByType(accountType, page, size);
     }
 }
