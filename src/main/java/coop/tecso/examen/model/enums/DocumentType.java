@@ -1,7 +1,7 @@
 package coop.tecso.examen.model.enums;
 
 public enum DocumentType {
-        
+
     /**
      * Número identificación Tributaria
      */

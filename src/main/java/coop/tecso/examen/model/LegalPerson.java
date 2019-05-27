@@ -76,4 +76,15 @@ public class LegalPerson {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+    @Override
+    public String toString() {
+        return "LegalPerson{" +
+                "id=" + id +
+                ", businessName='" + businessName + '\'' +
+                ", foundationYear=" + foundationYear +
+                ", rut='" + rut + '\'' +
+                ", active=" + active +
+                '}';
+    }
 }

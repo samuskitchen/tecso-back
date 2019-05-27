@@ -22,6 +22,7 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "number_account")
@@ -124,5 +125,18 @@ public class Account {
 
     public void setPhysicalPerson(PhysicalPerson physicalPerson) {
         this.physicalPerson = physicalPerson;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", numberAccount='" + numberAccount + '\'' +
+                ", currency=" + currency +
+                ", balance=" + balance +
+                ", accountType=" + accountType +
+                ", legalPerson=" + legalPerson +
+                ", physicalPerson=" + physicalPerson +
+                '}';
     }
 }

@@ -3,7 +3,6 @@ package coop.tecso.examen.util;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.math.BigDecimal;
-import java.util.Random;
 import java.util.UUID;
 
 public class Util {
@@ -31,28 +30,26 @@ public class Util {
      * @param useNumbers
      * @return
      */
-    public static String generateRandomAccount(int length, boolean useLetters, boolean useNumbers){
+    public static String generateRandomAccount(int length, boolean useLetters, boolean useNumbers) {
         return RandomStringUtils.random(length, useLetters, useNumbers);
     }
 
     /**
-     * Function that validates the amount of the discovered (financial) is greater than allowed
+     * Function to validate BigDecimal values
      *
      * @param firstValue
      * @param secondValue
      * @return
      */
-    public static Boolean validateAmount(BigDecimal firstValue, BigDecimal secondValue){
+    public static Boolean validateAmount(BigDecimal firstValue, BigDecimal secondValue) {
         int res;
         res = firstValue.compareTo(secondValue);
 
-        if( res == 0 ) {
+        if (res == 0) {
             return true;
-        }
-        else if( res == 1 ){
+        } else if (res == 1) {
             return true;
-        }
-        else if( res == -1 ){
+        } else if (res == -1) {
             return false;
         }
 

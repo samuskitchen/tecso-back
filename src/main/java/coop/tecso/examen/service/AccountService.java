@@ -8,9 +8,11 @@ import coop.tecso.examen.model.dto.AccountRequest;
 import coop.tecso.examen.model.enums.AccountType;
 import coop.tecso.examen.repository.AccountRepository;
 import coop.tecso.examen.repository.LegalPersonRepository;
+import coop.tecso.examen.repository.MovementsRepository;
 import coop.tecso.examen.repository.PhysicalPersonRepository;
 import coop.tecso.examen.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@CacheConfig(cacheNames = {"accounts"})
 public class AccountService {
 
     public static final String MESSAGES_VERIFY_RUT = "This RUT is already registered, please verify the information";
@@ -36,6 +39,9 @@ public class AccountService {
 
     @Autowired
     private PhysicalPersonRepository physicalPersonRepository;
+
+    @Autowired
+    private MovementsRepository movementsRepository;
 
 
     public Optional<Account> saveAccount(Account account) {
@@ -61,7 +67,17 @@ public class AccountService {
         }
     }
 
-    public Page<Account> findAccountByType(AccountType accountType, int page, int size){
+    public Optional<String> deleteAccountById(Long id) {
+        Optional<Account> optionalAccount = accountRepository.findById(id);
+
+        return optionalAccount.filter(account -> !movementsRepository.existsByAccount(account))
+                .map(account -> {
+                    accountRepository.delete(account);
+                    return Optional.of("The account was successfully deleted");
+                }).orElseThrow(() -> new AppException("The account can only be deleted if they do not have associated movements"));
+    }
+
+    public Page<Account> findAccountByType(AccountType accountType, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return accountRepository.findAccountByAccountType(accountType, pageable);
     }
@@ -257,11 +273,7 @@ public class AccountService {
 
         if (existRutLegal) {
             return true;
-        } else if (existRutPhysical) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return existRutPhysical;
     }
 
 }

@@ -1,5 +1,6 @@
 package coop.tecso.examen.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import coop.tecso.examen.model.enums.TypeMovement;
 
 import javax.persistence.Column;
@@ -24,6 +25,7 @@ public class Movements {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime date = OffsetDateTime.now(ZoneOffset.UTC);
 
     @Column(name = "type_movement")
@@ -95,5 +97,17 @@ public class Movements {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "Movements{" +
+                "id=" + id +
+                ", date=" + date +
+                ", typeMovement=" + typeMovement +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                ", account=" + account +
+                '}';
     }
 }

@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -46,6 +47,15 @@ public class AccountController {
                     return ResponseEntity.ok(account);
                 })
                 .orElseThrow(() -> new AppException("Unexpected error during update account. Please try again"));
+    }
+
+    @DeleteMapping(path = "delete")
+    public ResponseEntity<String> deleteAccountBy(@RequestParam Long id) {
+        return accountService.deleteAccountById(id)
+                .map(account -> {
+                    logger.info("Delete Account");
+                    return ResponseEntity.ok(account);
+                }).orElseThrow(() -> new AppException("Unexpected error during delete account. Please try again"));
     }
 
     @GetMapping(path = "find/type")

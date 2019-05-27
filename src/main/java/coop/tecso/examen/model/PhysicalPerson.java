@@ -103,4 +103,17 @@ public class PhysicalPerson {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+    @Override
+    public String toString() {
+        return "PhysicalPerson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", documentType=" + documentType +
+                ", numberDocument='" + numberDocument + '\'' +
+                ", rut='" + rut + '\'' +
+                ", active=" + active +
+                '}';
+    }
 }
