@@ -82,6 +82,10 @@ public class AccountService {
         return accountRepository.findAccountByAccountType(accountType, pageable);
     }
 
+    public Optional<Account> findAccountById(Long id){
+        return accountRepository.findById(id);
+    }
+
     /**
      * Intermediate function that validates the type of execution for legal person
      *

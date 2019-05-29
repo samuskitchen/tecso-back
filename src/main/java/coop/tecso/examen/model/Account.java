@@ -49,10 +49,6 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long id) {
-        this.id = id;
-    }
-
     public Account(String numberAccount, Currency currency, BigDecimal balance,
                    AccountType accountType, LegalPerson legalPerson) {
         this.numberAccount = numberAccount;

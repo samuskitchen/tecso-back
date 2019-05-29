@@ -64,4 +64,13 @@ public class AccountController {
                                            @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         return accountService.findAccountByType(accountType, page, size);
     }
+
+    @GetMapping(path = "find/id")
+    public ResponseEntity<Account> findAccountById(@RequestParam(value = "id") Long id){
+        return accountService.findAccountById(id)
+                .map(account -> {
+                    logger.info("Find Account By Id [" + id + "]");
+                    return ResponseEntity.ok(account);
+                }).orElseThrow(() -> new AppException("Unexpected error during find account by id. Please try again"));
+    }
 }
