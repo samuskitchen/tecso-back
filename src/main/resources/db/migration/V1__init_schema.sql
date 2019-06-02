@@ -46,7 +46,7 @@ CREATE TABLE "users"(
     first_name character varying(255),
     last_name character varying(255),
     is_email_verified boolean NOT NULL,
-    username character varying(255) NOT NULL,
+    username character varying(10) NOT NULL,
     password character varying(255) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
