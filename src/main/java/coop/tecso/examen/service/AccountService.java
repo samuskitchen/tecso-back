@@ -4,22 +4,22 @@ import coop.tecso.examen.exception.AppException;
 import coop.tecso.examen.model.Account;
 import coop.tecso.examen.model.LegalPerson;
 import coop.tecso.examen.model.PhysicalPerson;
-import coop.tecso.examen.model.dto.AccountRequest;
 import coop.tecso.examen.model.enums.AccountType;
 import coop.tecso.examen.repository.AccountRepository;
 import coop.tecso.examen.repository.LegalPersonRepository;
 import coop.tecso.examen.repository.MovementsRepository;
 import coop.tecso.examen.repository.PhysicalPersonRepository;
 import coop.tecso.examen.util.Util;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -48,23 +48,21 @@ public class AccountService {
         Optional<LegalPerson> legalPersonOptional = Optional.ofNullable(account.getLegalPerson());
         Optional<PhysicalPerson> physicalPersonOptional = Optional.ofNullable(account.getPhysicalPerson());
 
-        if (legalPersonOptional.isPresent()) {
+        if (ObjectUtils.allNotNull(account.getLegalPerson()) && !Objects.isNull(account.getLegalPerson())) {
             return validateLegalPerson(account, legalPersonOptional);
         } else {
             return validatePhysicalPerson(account, physicalPersonOptional);
         }
     }
 
-    public Optional<Account> updateAccount(AccountRequest accountRequest) {
-        Optional<Account> optionalAccount = accountRepository.findById(accountRequest.getIdAccount());
-        Optional<LegalPerson> legalPersonOptional = Optional.ofNullable(accountRequest.getLegalPerson());
-        Optional<PhysicalPerson> physicalPersonOptional = Optional.ofNullable(accountRequest.getPhysicalPerson());
+    public Optional<String> updateAccount(Account account) {
+        Optional<Account> optionalAccount = Optional.ofNullable(account);
 
-        if (null != accountRequest.getIdLegalPerson()) {
-            return updateAccountLegal(accountRequest, optionalAccount, legalPersonOptional);
-        } else {
-            return updateAccountPhysical(accountRequest, optionalAccount, physicalPersonOptional);
-        }
+        return optionalAccount.map(ac -> {
+            accountRepository.executeUpdateAccount(ac.getId(),
+                    ac.getCurrency().name(), ac.getBalance());
+            return Optional.of("Account Update Successfully");
+        }).orElseThrow(() -> new AppException("Error Update Account"));
     }
 
     public Optional<String> deleteAccountById(Long id) {
@@ -72,140 +70,25 @@ public class AccountService {
 
         return optionalAccount.filter(account -> !movementsRepository.existsByAccount(account))
                 .map(account -> {
+
+                    if (!Objects.isNull(account.getLegalPerson())) {
+                        legalPersonRepository.delete(account.getLegalPerson());
+                    } else {
+                        physicalPersonRepository.delete(account.getPhysicalPerson());
+                    }
+
                     accountRepository.delete(account);
                     return Optional.of("The account was successfully deleted");
                 }).orElseThrow(() -> new AppException("The account can only be deleted if they do not have associated movements"));
     }
 
     public Page<Account> findAccountByType(AccountType accountType, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
         return accountRepository.findAccountByAccountType(accountType, pageable);
     }
 
-    public Optional<Account> findAccountById(Long id){
+    public Optional<Account> findAccountById(Long id) {
         return accountRepository.findById(id);
-    }
-
-    /**
-     * Intermediate function that validates the type of execution for legal person
-     *
-     * @param accountRequest
-     * @param optionalAccount
-     * @param legalPersonOptional
-     * @return
-     */
-    private Optional<Account> updateAccountLegal(AccountRequest accountRequest, Optional<Account> optionalAccount, Optional<LegalPerson> legalPersonOptional) {
-
-        if (legalPersonOptional.isPresent() && !accountRequest.getActiveHolder()) {
-            return updateAccountDataLegal(accountRequest, optionalAccount);
-        } else {
-            return updateAccountNewLegal(accountRequest, optionalAccount);
-        }
-
-    }
-
-    /**
-     * Intermediate function that validates the execution type for physical person
-     *
-     * @param accountRequest
-     * @param optionalAccount
-     * @param physicalPersonOptional
-     * @return
-     */
-    private Optional<Account> updateAccountPhysical(AccountRequest accountRequest, Optional<Account> optionalAccount, Optional<PhysicalPerson> physicalPersonOptional) {
-
-        if (physicalPersonOptional.isPresent() && !accountRequest.getActiveHolder()) {
-            return updateAccountDataPhysical(accountRequest, optionalAccount);
-        } else {
-            return updateAccountNewPhysical(accountRequest, optionalAccount);
-        }
-    }
-
-    /**
-     * Function to update the data of an individual
-     *
-     * @param accountRequest
-     * @param optionalAccount
-     * @return
-     */
-    private Optional<Account> updateAccountDataPhysical(AccountRequest accountRequest, Optional<Account> optionalAccount) {
-        return optionalAccount
-                .map(account -> {
-                    account.getPhysicalPerson().setName(accountRequest.getPhysicalPerson().getName());
-                    account.getPhysicalPerson().setSurname(accountRequest.getPhysicalPerson().getSurname());
-                    account.getPhysicalPerson().setDocumentType(accountRequest.getPhysicalPerson().getDocumentType());
-
-                    return Optional.of(accountRepository.save(account));
-                }).orElseThrow(() -> new AppException(ERROR_UPDATING_ACCOUNT));
-    }
-
-    /**
-     * Function to update the data of a legal person
-     *
-     * @param accountRequest
-     * @param optionalAccount
-     * @return
-     */
-    private Optional<Account> updateAccountDataLegal(AccountRequest accountRequest, Optional<Account> optionalAccount) {
-        return optionalAccount
-                .map(account -> {
-                    account.getLegalPerson().setBusinessName(accountRequest.getLegalPerson().getBusinessName());
-                    account.getLegalPerson().setFoundationYear(accountRequest.getLegalPerson().getFoundationYear());
-
-                    return Optional.of(accountRepository.save(account));
-                }).orElseThrow(() -> new AppException(ERROR_UPDATING_ACCOUNT));
-    }
-
-    /**
-     * Function to remove the current physical person and associate a new natural person
-     *
-     * @param accountRequest
-     * @param optionalAccount
-     * @return
-     */
-    private Optional<Account> updateAccountNewPhysical(AccountRequest accountRequest, Optional<Account> optionalAccount) {
-        return optionalAccount
-                .map(account -> {
-                    Map<String, Object> objectMap = new HashMap<>();
-                    objectMap.put(ACCOUNT, account);
-                    objectMap.put(EXIST, validateExistsRut(accountRequest.getPhysicalPerson().getRut()));
-
-                    return objectMap;
-                }).filter(objectMap -> !(Boolean) objectMap.get(EXIST))
-                .map(objectMap -> {
-                    Account account = (Account) objectMap.get(ACCOUNT);
-                    account.getPhysicalPerson().setActive(false);
-                    accountRepository.save(account);
-
-                    account.setPhysicalPerson(accountRequest.getPhysicalPerson());
-                    return Optional.of(accountRepository.save(account));
-                }).orElseThrow(() -> new AppException(MESSAGES_VERIFY_RUT));
-    }
-
-    /**
-     * Function to remove the current legal person and associate a new legal person
-     *
-     * @param accountRequest
-     * @param optionalAccount
-     * @return
-     */
-    private Optional<Account> updateAccountNewLegal(AccountRequest accountRequest, Optional<Account> optionalAccount) {
-        return optionalAccount
-                .map(account -> {
-                    Map<String, Object> objectMap = new HashMap<>();
-                    objectMap.put(ACCOUNT, account);
-                    objectMap.put(EXIST, validateExistsRut(accountRequest.getLegalPerson().getRut()));
-
-                    return objectMap;
-                }).filter(objectMap -> !(Boolean) objectMap.get(EXIST))
-                .map(objectMap -> {
-                    Account account = (Account) objectMap.get(ACCOUNT);
-                    account.getLegalPerson().setActive(false);
-                    accountRepository.save(account);
-
-                    account.setLegalPerson(accountRequest.getLegalPerson());
-                    return Optional.of(accountRepository.save(account));
-                }).orElseThrow(() -> new AppException(MESSAGES_VERIFY_RUT));
     }
 
     /**
@@ -219,7 +102,9 @@ public class AccountService {
         return physicalPersonOptional.map(physicalPerson -> validateExistsRut(physicalPerson.getRut()))
                 .filter(aBoolean -> !aBoolean)
                 .map(aBoolean -> {
+                    account.setLegalPerson(null);
                     account.setNumberAccount(getNumberAccount());
+                    account.getPhysicalPerson().setActive(true);
                     Account ac = new Account(account.getNumberAccount(),
                             account.getCurrency(),
                             account.getBalance(),
@@ -241,7 +126,9 @@ public class AccountService {
         return legalPersonOptional.map(legalPerson -> validateExistsRut(legalPerson.getRut()))
                 .filter(aBoolean -> !aBoolean)
                 .map(aBoolean -> {
+                    account.setPhysicalPerson(null);
                     account.setNumberAccount(getNumberAccount());
+                    account.getLegalPerson().setActive(true);
                     Account ac = new Account(
                             account.getNumberAccount(),
                             account.getCurrency(),
@@ -249,6 +136,7 @@ public class AccountService {
                             account.getAccountType(),
                             account.getLegalPerson()
                     );
+
                     return Optional.of(accountRepository.save(ac));
                 })
                 .orElseThrow(() -> new AppException(MESSAGES_VERIFY_RUT));

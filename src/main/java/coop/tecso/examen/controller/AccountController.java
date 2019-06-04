@@ -40,11 +40,11 @@ public class AccountController {
     }
 
     @PutMapping(path = "update")
-    public ResponseEntity<Account> accountUpdate(@RequestBody AccountRequest accountRequest) {
-        return accountService.updateAccount(accountRequest)
-                .map(account -> {
-                    logger.info("Update Account: " + account.toString());
-                    return ResponseEntity.ok(account);
+    public ResponseEntity<String> accountUpdate(@RequestBody Account account) {
+        return accountService.updateAccount(account)
+                .map(ac -> {
+                    logger.info("Update Account: ");
+                    return ResponseEntity.ok(ac);
                 })
                 .orElseThrow(() -> new AppException("Unexpected error during update account. Please try again"));
     }

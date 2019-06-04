@@ -112,6 +112,13 @@
             <version>${jjwt.version}</version>
         </dependency>
 
+        <!--Commons Apache-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.3</version>
+        </dependency>
+
         <!--Template engine-->
         <dependency>
             <groupId>org.freemarker</groupId>

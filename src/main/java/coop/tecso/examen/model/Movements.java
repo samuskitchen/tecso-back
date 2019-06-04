@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.TimeZone;
 
 @Entity
 @Table(name = "movements")
@@ -25,7 +26,7 @@ public class Movements {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", timezone = "UTC")
     private OffsetDateTime date = OffsetDateTime.now(ZoneOffset.UTC);
 
     @Column(name = "type_movement")
