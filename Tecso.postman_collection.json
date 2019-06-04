@@ -1,0 +1,607 @@
+{
+	"info": {
+		"_postman_id": "391bf526-9cae-479b-ba7a-d84f6b97f15f",
+		"name": "Tecso",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "/register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"daniel.samkit@gmail.com\",\n  \"password\": \"admin\",\n  \"registerAsAdmin\": true,\n  \"username\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deviceInfo\": {\n    \"deviceId\": \"7b3a462e50f78383\",\n    \"deviceType\": \"DEVICE_TYPE_ANDROID\"\n  },\n  \"email\": \"daniel.samkit@gmail.com\",\n  \"password\": \"admin\",\n  \"username\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU4NjM4NDA0LCJleHAiOjE1NTg2NDIwMDR9.xmua1OExzbsz13OH901cLY72d6aCXRstxyAA1q-jmu6F1G8NFDEwXrwgMWFTp_FHdcu4UT3KsF59Qbiyo4ZayQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deviceInfo\": {\n    \"deviceId\": \"7b3a462e50f78383\",\n    \"deviceType\": \"DEVICE_TYPE_ANDROID\"\n  }\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/user/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "/account/save (PhysicalPerson)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU5NDYxMTk4LCJleHAiOjE1NTk0NjQ3OTh9.H8FUi0IX_g7gJgZkUSPWo-pKNGME49hfMus7Lg3Ge0lYoTK2DgODC_ECR2heGL3PUy8x_btAhZ7PodYjLeoQlw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"currency\": \"PESO\",\n\t\"balance\": 200,\n\t\"accountType\": \"AHORROS\",\n\t\"physicalPerson\": {\n\t\t\"name\": \"Daniel\",\n\t\t\"surname\": \"De La Pava\",\n\t\t\"documentType\": \"CC\",\n\t\t\"numberDocument\": \"1082905328\",\n\t\t\"rut\": \"3245234534\",\n\t\t\"active\": true\n\t}\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/account/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"account",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/account/save (LegalPerson)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU5NDYxMTk4LCJleHAiOjE1NTk0NjQ3OTh9.H8FUi0IX_g7gJgZkUSPWo-pKNGME49hfMus7Lg3Ge0lYoTK2DgODC_ECR2heGL3PUy8x_btAhZ7PodYjLeoQlw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"currency\": \"EURO\",\n\t\"balance\": 10.00,\n\t\"accountType\": \"CORRIENTE\",\n\t\"legalPerson\": {\n\t\t\t\"businessName\": \"Daniel Razon Social\",\n\t\t\t\"foundationYear\": 2019,\n\t\t\t\"rut\": \"3412341324\",\n\t\t\t\"active\": true\n\t}\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/account/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"account",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/account/update (LegalPerson / ActiveHolder = false)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU4ODAyMzA4LCJleHAiOjE1NTg4MDU5MDh9.kD_zlIWzlua-6KioOWmfuE0U_-zLghHSfbZDmpLlXhpwvcUFTc3GXit0E1ldytNjqJsXu4srg9TRUv7tRe2K6A",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idAccount\": 1,\n\t\"idLegalPerson\": 1,\n\t\"activeHolder\": false,\n\t\"legalPerson\": {\n\t\t\"businessName\": \"Prueba Update\",\n\t\t\"foundationYear\": 2018\n\t}\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/account/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"account",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/account/update (LegalPerson / ActiveHolder = true)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU4Nzk5NjM0LCJleHAiOjE1NTg4MDMyMzR9.VEVHyQ45adQkpNhKMqSgcVYkmgj0Hy1oURX8mZyxW1t7GornzO6bRZHi9t-G6LX-n5fj9aWCO5TkS7RaS7SJUw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idAccount\": 1,\n\t\"idLegalPerson\": 1,\n\t\"activeHolder\": true,\n\t\"legalPerson\": {\n\t\t\"businessName\": \"Prueba Update\",\n\t\t\"foundationYear\": 2015,\n\t\t\"rut\": \"89101656080\",\n\t\t\"active\": true\n\t}\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/account/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"account",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/account/update (PhysicalPerson / ActiveHolder = false)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU4OTM1NDI3LCJleHAiOjE1NTg5MzkwMjd9.lR-RvClW1t5ySPOk8NUfk3vHLp0aflrU5f2x7ZSjs-srjpjwERCFOwLQtWShI9fg0oact78CtdrBpTUCWhtl0A",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idAccount\": 4,\n\t\"idPhysicalPerson\": 3,\n\t\"activeHolder\": false,\n\t\"physicalPerson\": {\n        \"name\": \"Pandora\",\n        \"surname\": \"Obregon\",\n        \"documentType\": \"CE\"\n    }\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/account/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"account",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/account/update (PhysicalPerson / ActiveHolder = true)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU4OTM1NDI3LCJleHAiOjE1NTg5MzkwMjd9.lR-RvClW1t5ySPOk8NUfk3vHLp0aflrU5f2x7ZSjs-srjpjwERCFOwLQtWShI9fg0oact78CtdrBpTUCWhtl0A",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"idAccount\": 4,\n\t\"idPhysicalPerson\": 3,\n\t\"activeHolder\": true,\n\t\"physicalPerson\": {\n\t\t\"name\": \"Daniel\",\n\t\t\"surname\": \"De La Pava\",\n\t\t\"documentType\": \"CC\",\n\t\t\"numberDocument\": \"1082905328\",\n\t\t\"rut\": \"31305911\",\n\t\t\"active\": true\n\t}\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/account/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"account",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/account/find/type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU5NDM4MTExLCJleHAiOjE1NTk0NDE3MTF9.4Wn-n48xdEJuF13an2ZNTh3l0Gdi9Jnc3KjX3HOqyenYZpLLguIa1MMLy6AHu7EdzCF4jNNmEVNlJ8UhlKEHjA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8083/api/account/find/type?accountType=CORRIENTE&page=0&size=10",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"account",
+								"find",
+								"type"
+							],
+							"query": [
+								{
+									"key": "accountType",
+									"value": "CORRIENTE"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/account/delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU4OTM1NDI3LCJleHAiOjE1NTg5MzkwMjd9.lR-RvClW1t5ySPOk8NUfk3vHLp0aflrU5f2x7ZSjs-srjpjwERCFOwLQtWShI9fg0oact78CtdrBpTUCWhtl0A",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8083/api/account/delete?id=4",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"account",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/account/find/id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU5MDgwMzU4LCJleHAiOjE1NTkwODM5NTh9.6K0eCOypDkWTEVnKzBT1tnOI7VCQcdia1tVKnJgfBwE3CEuQ-TswakyfpW-a5KQ2N9S17NESXoPqN3i1-f2pjQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8083/api/account/find/id?id=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"account",
+								"find",
+								"id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movement",
+			"item": [
+				{
+					"name": "/movements/save (Debit)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU4OTIwNTM5LCJleHAiOjE1NTg5MjQxMzl9.uvtq3czqIQaV5kbQMOsIt5FJRa3KFexdOdFdF8G6AjTZBpr63JWoUQe__ZU-21ZYIHcBhTeqFfZpjbx5S4ZXYw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"typeMovement\": \"DEBITO\",\n\t\"description\": \"Prueba de movimiento de debito\",\n\t\"amount\": 100,\n\t\"account\": {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/movements/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"movements",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movements/save (Credit)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU4OTIwNTM5LCJleHAiOjE1NTg5MjQxMzl9.uvtq3czqIQaV5kbQMOsIt5FJRa3KFexdOdFdF8G6AjTZBpr63JWoUQe__ZU-21ZYIHcBhTeqFfZpjbx5S4ZXYw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"typeMovement\": \"CREDITO\",\n\t\"description\": \"Prueba de movimiento de credito\",\n\t\"amount\": 900,\n\t\"account\": {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/api/movements/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"movements",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/movements/find/account",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU4OTMzODE0LCJleHAiOjE1NTg5Mzc0MTR9.63zbXwYC9l-9ncCb1dsP_eER2aqZ_YFXB22uv1yaWFGRjYDfmZB-5umuO_ruTAl40zDR87KV5thkVdOZjzgAbg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8083/api/movements/find/account?id=1&page=0&size=10",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"api",
+								"movements",
+								"find",
+								"account"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8083/api/actuator/health",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"api",
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
