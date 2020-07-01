@@ -35,7 +35,7 @@
         <jadira-usertype-version>6.0.1.GA</jadira-usertype-version>
         <guava.version>19.0</guava.version>
         <jjwt.version>0.9.1</jjwt.version>
-        <log4j.version>2.11.2</log4j.version>
+        <log4j.version>2.13.2</log4j.version>
         <freemarker.version>2.3.28</freemarker.version>
         <swagger.version>2.9.2</swagger.version>
     </properties>
